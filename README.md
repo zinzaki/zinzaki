@@ -1,16 +1,11 @@
-## Hi there 👋
+<div align="center">
+  <br />
+  <code>  ​ 人 は 心 で 生 き る ん だ  </code>
+  <br />
+  <kbd>Hito wa kokoro de ikiru nda</kbd>
+  <br /><br />
+  
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=120&section=header&text=Welcome%20to%20my%20runtime&fontSize=30&animation=fadeIn" width="100%" />
+</div>
 
-<!--
-**zinzaki/zinzaki** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+---
