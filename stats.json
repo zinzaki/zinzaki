@@ -1,0 +1,48 @@
+{
+  "metrics": {
+    "commits": 13,
+    "repos": 3,
+    "stars": 0,
+    "followers": 0
+  },
+  "streak": {
+    "current": 3,
+    "longest": 5,
+    "spark": [
+      1,
+      1,
+      1,
+      5,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      3
+    ]
+  },
+  "activity": {
+    "label": "active",
+    "level": "on"
+  },
+  "auto_projects": [
+    {
+      "name": "yoshiki",
+      "stars": 0,
+      "desc": "様式 — Zinzaki's design language. Warm lacquer · bone · gold, stru",
+      "lang": "Python",
+      "heat": 3
+    },
+    {
+      "name": "X",
+      "stars": 0,
+      "desc": "",
+      "lang": "",
+      "heat": 3
+    }
+  ]
+}

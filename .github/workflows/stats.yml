@@ -1,0 +1,127 @@
+name: Update Stats
+
+# Refreshes the live data on the profile (metrics + top repos) from the GitHub
+# API and rebuilds profile.svg. Commits are made as github-actions[bot] — never
+# the repo owner — so this automation does NOT touch anyone's contribution graph.
+# It commits only when the data actually changed, keeping history clean.
+
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-stats
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch metrics + top repos
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const login = context.repo.owner;
+            const { data: user } = await github.rest.users.getByUsername({ username: login });
+            const repos = await github.paginate(github.rest.repos.listForUser, {
+              username: login, per_page: 100, type: 'owner'
+            });
+
+            let stars = 0;
+            for (const r of repos) stars += r.stargazers_count;
+
+            // commits + contribution calendar via GraphQL — tolerate API
+            // hiccups (keep the rest of the stats). The calendar lets us
+            // compute streaks ourselves, so the profile needs no third-party
+            // streak service.
+            let commits = 0;
+            let streak = { current: 0, longest: 0, spark: Array(14).fill(0) };
+            try {
+              const gql = await github.graphql(
+                `query($login:String!){ user(login:$login){
+                   contributionsCollection{
+                     totalCommitContributions restrictedContributionsCount
+                     contributionCalendar{
+                       weeks{ contributionDays{ date contributionCount } } } } } }`,
+                { login }
+              );
+              const c = gql.user.contributionsCollection;
+              commits = c.totalCommitContributions + c.restrictedContributionsCount;
+
+              // flatten the calendar into a chronological list of daily counts
+              const counts = [];
+              for (const w of c.contributionCalendar.weeks)
+                for (const d of w.contributionDays) counts.push(d.contributionCount);
+
+              // longest run of consecutive active days
+              let longest = 0, run = 0;
+              for (const n of counts) { run = n > 0 ? run + 1 : 0; if (run > longest) longest = run; }
+
+              // current streak — a contribution-free *today* doesn't break it yet
+              let end = counts.length - 1;
+              if (end >= 0 && counts[end] === 0) end--;
+              let current = 0;
+              for (let i = end; i >= 0 && counts[i] > 0; i--) current++;
+
+              streak = { current, longest, spark: counts.slice(-14) };
+            } catch (e) { core.warning('contributions fetch failed: ' + e.message); }
+
+            // top public, non-fork repos by stars (exclude the profile repo itself)
+            const now = Date.now();
+            const heat = (iso) => {
+              const days = (now - new Date(iso).getTime()) / 86400000;
+              return days < 30 ? 3 : days < 120 ? 2 : days < 365 ? 1 : 0;
+            };
+            const top = repos
+              .filter(r => !r.fork && !r.private && r.name.toLowerCase() !== login.toLowerCase())
+              .sort((a, b) => b.stargazers_count - a.stargazers_count ||
+                              new Date(b.pushed_at) - new Date(a.pushed_at))
+              .slice(0, 3)
+              .map(r => ({
+                name: r.name,
+                stars: r.stargazers_count,
+                desc: (r.description || '').slice(0, 64),
+                lang: r.language || '',
+                heat: heat(r.pushed_at),
+              }));
+
+            // Presence derived from the latest public event — coarse buckets so a
+            // once-a-day refresh never misrepresents the real state.
+            let activity = { label: "away", level: "off" };
+            try {
+              const ev = await github.rest.activity.listPublicEventsForUser({ username: login, per_page: 1 });
+              if (ev.data.length) {
+                const days = (Date.now() - new Date(ev.data[0].created_at).getTime()) / 86400000;
+                activity = days <= 3  ? { label: "active", level: "on" }
+                         : days <= 21 ? { label: "around", level: "mid" }
+                         :              { label: "away",   level: "off" };
+              }
+            } catch (e) { core.warning('activity fetch failed: ' + e.message); }
+
+            const out = {
+              metrics: { commits, repos: repos.length, stars, followers: user.followers },
+              streak,
+              activity,
+              auto_projects: top,
+            };
+            require('fs').writeFileSync('stats.json', JSON.stringify(out, null, 2) + '\n');
+            console.log(out);
+
+      - name: Regenerate
+        run: pip install pyyaml -q && python3 generate.py && python3 test_generate.py && python3 bump_cache.py
+
+      - name: Commit (as github-actions[bot], only when data changed)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats.json profile.svg README.md
+          git diff --cached --quiet && { echo "no changes — nothing to commit"; exit 0; }
+          git commit -m "chore: refresh profile data [skip ci]"
+          git pull --rebase --autostash origin main || true
+          git push

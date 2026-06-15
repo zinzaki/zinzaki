@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1430" viewBox="0 0 900 1430" role="img">
+<foreignObject width="900" height="1430">
+<div xmlns="http://www.w3.org/1999/xhtml">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.root{color:#EDE3C4;font-family:'Courier New',Courier,monospace;position:relative;overflow:hidden;
+  background:radial-gradient(rgba(200,169,110,.02) 1px,transparent 1px) 0 0 / 26px 26px,#0B0A08;}
+.root::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:40;
+  background:radial-gradient(150% 100% at 50% -20%,transparent 64%,rgba(0,0,0,.3));}
+
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinr{to{transform:rotate(-360deg)}}
+@keyframes typ{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@keyframes curin{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
+/* a soft, slow breath of light — not a neon glow */
+@keyframes coremorph{0%,100%{transform:rotate(0) scale(1);opacity:.9}
+  50%{transform:rotate(90deg) scale(.62);opacity:.6}}
+@keyframes corepulse{0%,100%{opacity:.5}50%{opacity:.95}}
+
+/* ── sharp skeleton: outer frame + corner brackets (the architectural grid) ── */
+.frame{position:absolute;inset:14px;border:1px solid rgba(200,169,110,.1);pointer-events:none;z-index:3;}
+.cnr{position:absolute;width:15px;height:15px;border:1.5px solid rgba(200,169,110,.65);z-index:4;}
+.cnr.tl{top:10px;left:10px;border-right:0;border-bottom:0}
+.cnr.tr{top:10px;right:10px;border-left:0;border-bottom:0}
+.cnr.bl{bottom:10px;left:10px;border-right:0;border-top:0}
+.cnr.br{bottom:10px;right:10px;border-left:0;border-top:0}
+
+.kage{position:absolute;top:-18px;left:26px;z-index:1;font-size:205px;color:#c8a96e;opacity:.03;
+  pointer-events:none;user-select:none;}
+
+/* crystal sigil — sharp geometric jewel (kept, glow dimmed) */
+.crystal{position:absolute;width:62px;height:62px;z-index:2;color:#c8a96e;}
+.sig{width:62px;height:62px;overflow:visible;}
+.sig .r{fill:none;stroke:currentColor;}
+.sig .s1{transform-box:fill-box;transform-origin:center;animation:spin 40s linear infinite;opacity:.4;}
+.sig .s2{transform-box:fill-box;transform-origin:center;animation:spinr 30s linear infinite;opacity:.6;}
+.sig .s3{transform-box:fill-box;transform-origin:center;animation:spin 22s linear infinite;opacity:.8;}
+.sig .s4{transform-box:fill-box;transform-origin:center;animation:spinr 22s linear infinite;opacity:.8;}
+.sig .s5{transform-box:fill-box;transform-origin:center;animation:spin 15s linear infinite;opacity:.5;}
+/* the scarlet heart of the sigil — the lily's memory; a bright catch-point up
+   top that pairs with the bloom below (gold rings, scarlet core) */
+.sig .score{transform-box:fill-box;transform-origin:center;fill:#BB3C33;stroke:none;
+  filter:drop-shadow(0 0 5px rgba(187,60,51,.75));animation:coremorph 6s ease-in-out infinite;}
+.sig .dot{fill:#D4665C;animation:corepulse 3s ease-in-out infinite;}
+
+/* zones */
+.zone{position:relative;z-index:5;padding:0 52px;}
+.divln{border-top:1px solid rgba(200,169,110,.09);}
+.zt{position:relative;display:flex;align-items:center;justify-content:space-between;
+  font-size:12.5px;letter-spacing:.22em;color:rgba(214,189,140,.9);}
+.zt.sub{font-size:11px;color:rgba(214,189,140,.66);}
+/* sharp diamond marker — a skeleton accent, static */
+.zt .mk{display:inline-block;width:7px;height:7px;background:#c8a96e;margin-right:13px;
+  transform:rotate(45deg);box-shadow:0 0 5px rgba(200,169,110,.3);}
+.zt .lbl{display:inline-flex;align-items:center;}
+.zt .txt{position:relative;display:inline-block;}
+.zt .d{color:#94866A;letter-spacing:.14em;font-size:11.5px;}
+.cols{display:flex;}
+.cR{border-left:1px solid rgba(200,169,110,.08);}
+
+/* header */
+.meta{position:absolute;font-size:10.5px;letter-spacing:.22em;color:rgba(210,184,135,.5);z-index:6;}
+.meta.tl{top:34px;left:50px}.meta.tr{top:34px;right:50px;text-align:right}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;
+  vertical-align:middle;background:#94866A;}
+.dot.on{background:#8FAC6F;box-shadow:0 0 5px rgba(143,172,111,.55);animation:pulse 2.8s ease-in-out infinite;}
+.dot.mid{background:#C67F45;}
+.dot.off{background:#94866A;opacity:.55;}
+.hz{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;}
+.jp{font-size:33px;letter-spacing:.42em;text-indent:.42em;color:#c8a96e;text-shadow:0 0 11px rgba(200,169,110,.2);}
+.romaji{font-size:11.5px;letter-spacing:.36em;text-indent:.36em;color:#94866A;margin-top:13px;}
+.nickslot{position:relative;width:760px;height:90px;margin-top:26px;
+  display:flex;align-items:center;justify-content:center;}
+.nick{position:absolute;font-size:29px;letter-spacing:.16em;color:#F7EED2;white-space:nowrap;}
+.nick .ch{display:inline-block;animation:typ .3s ease backwards;}
+.cur{display:inline-block;width:11px;height:25px;background:#c8a96e;vertical-align:-4px;margin-left:8px;
+  border-radius:1px;opacity:0;animation:curin 1.1s step-end infinite;}
+.quotes{position:absolute;max-width:730px;font-size:16px;line-height:1.5;letter-spacing:.04em;
+  color:#e7dcc0;font-style:italic;text-align:center;opacity:0;}
+.qt::after{content:"";white-space:pre-line;}
+.role{font-size:13px;letter-spacing:.26em;text-indent:.26em;color:#C9BC96;margin-top:22px;}
+
+/* stack — sharp section accents, softly-rounded pills (the corner blend) */
+.stackgrid{display:flex;flex-wrap:wrap;gap:19px 36px;}
+.cat{flex:1 1 0;min-width:300px;}
+.cl{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#c8a96e;opacity:.78;
+  margin-bottom:10px;padding-left:9px;border-left:2px solid #c8a96e;line-height:1.1;}
+.tags{display:flex;flex-wrap:wrap;gap:7px;}
+/* using → outlined (default); core → gold fill; learning → dashed + dim */
+.tag{font-size:12.5px;color:#C9BC96;border:1px solid rgba(200,169,110,.22);
+  background:rgba(200,169,110,.03);padding:4px 11px;border-radius:6px;letter-spacing:.02em;line-height:1.5;}
+.tag.core{color:#c8a96e;border-color:rgba(200,169,110,.55);background:rgba(200,169,110,.1);font-weight:bold;}
+.tag.learning{color:#94866A;background:transparent;border-style:dashed;
+  border-color:rgba(138,111,62,.45);}
+
+/* streak — rounded card */
+.streak{display:flex;align-items:center;gap:28px;margin-top:16px;padding:14px 18px;
+  background:#1B1813;border:1px solid rgba(200,169,110,.14);border-radius:9px;}
+.skv{display:flex;flex-direction:column;}
+.skn{font-size:24px;color:#F7EED2;line-height:1;}
+.skn small{font-size:12px;color:#94866A;margin-left:3px;}
+.skl{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#94866A;margin-top:7px;}
+.spark{display:flex;align-items:flex-end;gap:3px;height:38px;margin-left:auto;}
+.spark .bar{width:7px;background:rgba(200,169,110,.3);border-radius:2px 2px 0 0;min-height:2px;}
+.spark .bar.hot{background:#c8a96e;opacity:.85;}
+
+/* vision terminal — rounded card */
+.vterm{border:1px solid rgba(200,169,110,.14);background:rgba(0,0,0,.2);overflow:hidden;border-radius:9px;}
+.vbar{display:flex;align-items:center;gap:6px;padding:8px 13px;border-bottom:1px solid rgba(200,169,110,.1);}
+.vbar .wd{width:8px;height:8px;border-radius:50%;border:1px solid rgba(200,169,110,.4);}
+.vbar .vbt{margin-left:8px;font-size:10.5px;letter-spacing:.12em;color:#94866A;}
+/* fixed height + clip: the terminal types/clears WITHOUT reflowing the layout */
+.vt{height:252px;overflow:hidden;padding:12px 14px;font-size:13px;line-height:1.95;color:#C9BC96;}
+.tw::after{content:"$ ▌";white-space:pre;}  /* static idle prompt; the animation overrides it */
+
+/* metrics — rounded tiles with a small sharp corner accent (the blend, again) */
+.mrow{display:flex;flex-wrap:wrap;gap:13px;margin-top:18px;}
+.met{flex:1 1 40%;min-width:120px;position:relative;background:#1B1813;
+  border:1px solid rgba(200,169,110,.14);padding:18px 12px 15px;text-align:center;border-radius:9px;}
+.met::before{content:'';position:absolute;top:9px;left:9px;width:9px;height:9px;
+  border-top:1.5px solid rgba(200,169,110,.55);border-left:1.5px solid rgba(200,169,110,.55);}
+.mv{display:block;font-size:31px;color:#F7EED2;line-height:1;}
+.ml{display:block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#94866A;margin-top:11px;}
+
+/* projects */
+.pj{display:flex;flex-direction:column;padding:11px 0;border-bottom:1px solid rgba(200,169,110,.07);}
+.pj:last-child{border-bottom:0;}
+.pjh{display:flex;align-items:center;font-size:16px;}
+.lamp{width:7px;height:7px;border-radius:50%;flex:none;margin-right:13px;}
+.lamp.h3{background:#8FAC6F;box-shadow:0 0 5px rgba(143,172,111,.45);}
+.lamp.h2{background:#c8a96e;}
+.lamp.h1{background:#8a6f3e;}.lamp.h0{background:#94866A;}
+.pjn{color:#F7EED2;letter-spacing:.02em;}
+.pjlang{font-size:11.5px;color:#94866A;margin-left:12px;}
+.pjs{margin-left:auto;font-size:12.5px;color:#c8a96e;opacity:.85;}
+.pjd{font-size:13px;color:#C9BC96;line-height:1.5;margin-top:5px;padding-left:20px;}
+.empty{border:1px dashed rgba(200,169,110,.18);padding:22px;text-align:center;border-radius:8px;}
+.el1{color:#C9BC96;font-size:13.5px;letter-spacing:.04em;}
+.el2{color:#94866A;font-size:11.5px;margin-top:8px;}
+
+/* focus — sharp diamond bullets */
+.nowln{font-size:13px;color:#c8a96e;margin-bottom:12px;}
+.nowln b{color:#8a6f3e;font-weight:normal;}
+.fi{display:flex;align-items:baseline;font-size:13.5px;color:#C9BC96;line-height:2.05;}
+.fi .b{width:6px;height:6px;flex:none;background:#c8a96e;margin-right:13px;
+  transform:translateY(-1px) rotate(45deg);}
+.fhint{font-size:10.5px;color:#94866A;letter-spacing:.04em;margin-top:16px;}
+
+/* closing block (folded into the main panel): contacts + principle */
+.outro{text-align:center;}
+.rule{display:flex;align-items:center;justify-content:center;width:340px;margin:0 auto;}
+.rule .l{flex:1;height:1px;background:rgba(200,169,110,.16);}
+/* the one scarlet bloom — Lycoris on the border line (rare trigger color) */
+.lily{flex:none;margin:0 17px;width:30px;height:30px;line-height:0;}
+.lily svg{width:30px;height:30px;overflow:visible;display:block;
+  filter:drop-shadow(0 0 5px rgba(187,60,51,.5));}
+.lily .st path{fill:none;stroke:#BB3C33;stroke-width:1.15;stroke-linecap:round;}
+.lily .an circle{fill:#D4665C;}
+.lily .core{fill:#BB3C33;}
+.fj{font-size:17px;letter-spacing:.34em;text-indent:.34em;color:#c8a96e;margin-top:18px;text-shadow:0 0 10px rgba(200,169,110,.2);}
+.fr{font-size:10.5px;letter-spacing:.3em;text-indent:.3em;color:#94866A;margin-top:11px;}
+
+/* Respect the OS "reduce motion" setting: drop to a calm static banner —
+   name visible, terminal idle, crystal still. Also lighter on weak machines. */
+@media (prefers-reduced-motion: reduce){
+  .tw::after,.qt::after,.nick,.quotes,.cur,.dot.on,
+  .sig .s1,.sig .s2,.sig .s3,.sig .s4,.sig .s5,.sig .score,.sig .dot{
+    animation:none !important;
+  }
+}
+@keyframes termw{0.000%{content:"$ f▌"}1.042%{content:"$ fa▌"}2.083%{content:"$ fas▌"}3.125%{content:"$ fast▌"}4.167%{content:"$ fastf▌"}5.208%{content:"$ fastfe▌"}6.250%{content:"$ fastfet▌"}7.292%{content:"$ fastfetc▌"}8.333%{content:"$ fastfetch▌"}9.375%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}10.417%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}11.458%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}12.500%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}13.542%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}14.583%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}15.625%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}16.667%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}17.708%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}18.750%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}19.792%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}20.833%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}21.875%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}22.917%{content:"$ fastfetch\A     ⣿⣿     力 zinzaki@nixos\A    ⣿⣿⣿⣿    ──────────\A   ⣿⣿⣿⣿⣿⣿   os     NixOS\A    ⣿⣿⣿⣿    wm     hyprland\A     ⣿⣿     shell  fish\A            editor neovim\A $ ▌"}23.958%{content:"$ ▌"}25.000%{content:"$ ▌"}26.042%{content:"$ n▌"}27.083%{content:"$ ni▌"}28.125%{content:"$ nix▌"}29.167%{content:"$ nix ▌"}30.208%{content:"$ nix b▌"}31.250%{content:"$ nix bu▌"}32.292%{content:"$ nix bui▌"}33.333%{content:"$ nix buil▌"}34.375%{content:"$ nix build▌"}35.417%{content:"$ nix build ▌"}36.458%{content:"$ nix build .▌"}37.500%{content:"$ nix build .#▌"}38.542%{content:"$ nix build .#e▌"}39.583%{content:"$ nix build .#ex▌"}40.625%{content:"$ nix build .#exe▌"}41.667%{content:"$ nix build .#exet▌"}42.708%{content:"$ nix build .#exet-▌"}43.750%{content:"$ nix build .#exet-o▌"}44.792%{content:"$ nix build .#exet-os▌"}45.833%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}46.875%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}47.917%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}48.958%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}50.000%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}51.042%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}52.083%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}53.125%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}54.167%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}55.208%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}56.250%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}57.292%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}58.333%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}59.375%{content:"$ nix build .#exet-os\A   → an OS that does not exist yet\A $ ▌"}60.417%{content:"$ ▌"}61.458%{content:"$ ▌"}62.500%{content:"$ g▌"}63.542%{content:"$ gi▌"}64.583%{content:"$ git▌"}65.625%{content:"$ git ▌"}66.667%{content:"$ git l▌"}67.708%{content:"$ git lo▌"}68.750%{content:"$ git log▌"}69.792%{content:"$ git log ▌"}70.833%{content:"$ git log -▌"}71.875%{content:"$ git log --▌"}72.917%{content:"$ git log --o▌"}73.958%{content:"$ git log --on▌"}75.000%{content:"$ git log --one▌"}76.042%{content:"$ git log --onel▌"}77.083%{content:"$ git log --oneli▌"}78.125%{content:"$ git log --onelin▌"}79.167%{content:"$ git log --oneline▌"}80.208%{content:"$ git log --oneline ▌"}81.250%{content:"$ git log --oneline -▌"}82.292%{content:"$ git log --oneline -2▌"}83.333%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}84.375%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}85.417%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}86.458%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}87.500%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}88.542%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}89.583%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}90.625%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}91.667%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}92.708%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}93.750%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}94.792%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}95.833%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}96.875%{content:"$ git log --oneline -2\A   design — shape before code\A   yoshiki — gold is a seam\A $ ▌"}97.917%{content:"$ ▌"}98.958%{content:"$ ▌"}}.tw::after{animation:termw 18.0s steps(1,end) infinite;}@keyframes nfade{0.000%{opacity:1}5.841%{opacity:1}6.585%{opacity:0}10.615%{opacity:0}11.359%{opacity:1}17.200%{opacity:1}17.944%{opacity:0}24.173%{opacity:0}24.916%{opacity:1}30.758%{opacity:1}31.501%{opacity:0}36.870%{opacity:0}37.614%{opacity:1}43.455%{opacity:1}44.198%{opacity:0}49.950%{opacity:0}50.693%{opacity:1}56.534%{opacity:1}57.278%{opacity:0}62.886%{opacity:0}63.629%{opacity:1}69.471%{opacity:1}70.214%{opacity:0}75.248%{opacity:0}75.992%{opacity:1}81.833%{opacity:1}82.577%{opacity:0}86.798%{opacity:0}87.542%{opacity:1}93.383%{opacity:1}94.127%{opacity:0}99.257%{opacity:0}100.000%{opacity:1}}@keyframes qfade{0.000%{opacity:0}5.841%{opacity:0}6.585%{opacity:1}10.615%{opacity:1}11.359%{opacity:0}17.200%{opacity:0}17.944%{opacity:1}24.173%{opacity:1}24.916%{opacity:0}30.758%{opacity:0}31.501%{opacity:1}36.870%{opacity:1}37.614%{opacity:0}43.455%{opacity:0}44.198%{opacity:1}49.950%{opacity:1}50.693%{opacity:0}56.534%{opacity:0}57.278%{opacity:1}62.886%{opacity:1}63.629%{opacity:0}69.471%{opacity:0}70.214%{opacity:1}75.248%{opacity:1}75.992%{opacity:0}81.833%{opacity:0}82.577%{opacity:1}86.798%{opacity:1}87.542%{opacity:0}93.383%{opacity:0}94.127%{opacity:1}99.257%{opacity:1}100.000%{opacity:0}}@keyframes qcontent{0.000%{content:""}5.841%{content:"What is a world\A of true freedom?"}11.359%{content:""}17.200%{content:"Limitation is not the opposite of freedom —\A it is what makes freedom possible."}24.916%{content:""}30.758%{content:"Truth exists regardless of whether\A anyone accepts it or not."}37.614%{content:""}43.455%{content:"A person who cannot govern themselves\A will always look for a master."}50.693%{content:""}56.534%{content:"The person you think you are\A is only one possible version of you."}63.629%{content:""}69.471%{content:"Are you building your life,\A or simply reacting to it?"}75.992%{content:""}81.833%{content:"The reason you wake up\A each morning."}87.542%{content:""}93.383%{content:"Every person lives inside\A their own version of reality."}100.000%{content:""}}.nick{animation:nfade 94.2s ease infinite;}.quotes{animation:qfade 94.2s ease infinite;}.qt::after{animation:qcontent 94.2s steps(1,end) infinite;}</style>
+<div class="root" style="width:900px;height:1430px;">
+<div class="kage">影</div><div class="frame"></div><div class="cnr tl"></div><div class="cnr tr"></div><div class="cnr bl"></div><div class="cnr br"></div>
+<div class="zone" style="height:318px;">
+  <div class="meta tl">UNIT — ZINZAKI</div>
+  <div class="meta tr">NODE 01 · <span class="dot on"></span>ACTIVE</div>
+  <div class="crystal" style="top:84px;right:44px;">
+  <svg class="sig" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <circle class="r s1" cx="50" cy="50" r="46" stroke-width="1" stroke-dasharray="3 7"/>
+    <polygon class="r s2" points="50,8 86,29 86,71 50,92 14,71 14,29" stroke-width="1.1"/>
+    <polygon class="r s3" points="50,18 82,70 18,70" stroke-width="1"/>
+    <polygon class="r s4" points="50,82 82,30 18,30" stroke-width="1"/>
+    <rect class="r s5" x="34" y="34" width="32" height="32" stroke-width="1"/>
+    <polygon class="score" points="50,40 60,50 50,60 40,50"/>
+    <circle class="dot" cx="50" cy="50" r="2.4"/>
+  </svg></div>
+  <div class="hz">
+    <div class="jp">人は心で生きるんだ</div>
+    <div class="romaji">hito wa kokoro de ikiru nda</div>
+    <div class="nickslot">
+      <div class="nick"><span class="ch" style="animation-delay:0.00s">◇</span><span class="ch" style="animation-delay:0.12s">&#160;</span><span class="ch" style="animation-delay:0.24s">𝚉</span><span class="ch" style="animation-delay:0.36s">&#160;</span><span class="ch" style="animation-delay:0.48s">𝙸</span><span class="ch" style="animation-delay:0.60s">&#160;</span><span class="ch" style="animation-delay:0.72s">𝙽</span><span class="ch" style="animation-delay:0.84s">&#160;</span><span class="ch" style="animation-delay:0.96s">𝚉</span><span class="ch" style="animation-delay:1.08s">&#160;</span><span class="ch" style="animation-delay:1.20s">𝙰</span><span class="ch" style="animation-delay:1.32s">&#160;</span><span class="ch" style="animation-delay:1.44s">𝙺</span><span class="ch" style="animation-delay:1.56s">&#160;</span><span class="ch" style="animation-delay:1.68s">𝙸</span><span class="ch" style="animation-delay:1.80s">&#160;</span><span class="ch" style="animation-delay:1.92s">影</span><span class="ch" style="animation-delay:2.04s">&#160;</span><span class="ch" style="animation-delay:2.16s">◇</span><span class="cur" style="animation-delay:2.48s"></span></div>
+      <div class="quotes"><span class="qt"></span></div>
+    </div>
+    <div class="role">architect · systems &amp; software</div>
+  </div>
+</div><div class="zone divln" style="padding-top:22px;padding-bottom:24px;">
+  <div class="zt"><span class="lbl"><span class="mk"></span><span class="txt">STACK · INSTRUMENTS</span></span><span class="d">6 domains</span></div>
+  <div style="margin-top:18px;"><div class="stackgrid"><div class="cat"><div class="cl">languages · core</div><div class="tags"><span class="tag core">Python</span><span class="tag core">TypeScript</span><span class="tag">Go</span></div></div><div class="cat"><div class="cl">web · fullstack</div><div class="tags"><span class="tag core">FastAPI</span><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Tailwind</span></div></div><div class="cat"><div class="cl">bots · automation</div><div class="tags"><span class="tag core">aiogram</span><span class="tag">Bash</span><span class="tag">Node.js</span></div></div><div class="cat"><div class="cl">ai · data</div><div class="tags"><span class="tag core">OpenAI API</span><span class="tag">LangChain</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag learning">PyTorch</span></div></div><div class="cat"><div class="cl">systems · low-level</div><div class="tags"><span class="tag core">Rust</span><span class="tag">C</span><span class="tag learning">Assembly</span><span class="tag learning">Linux kernel</span></div></div><div class="cat"><div class="cl">platform · ops</div><div class="tags"><span class="tag core">Linux</span><span class="tag core">Git</span><span class="tag">Docker</span><span class="tag">NixOS</span></div></div></div></div>
+</div><div class="zone divln" style="padding-top:22px;padding-bottom:26px;">
+  <div class="zt"><span class="lbl"><span class="mk"></span><span class="txt">METRICS · LIVE</span></span><span class="d">github · Zinzaki</span></div>
+  <div class="cols" style="margin-top:16px;">
+    <div style="flex:1.18;padding-right:30px;">
+      <div class="mrow" style="margin-top:0;"><div class="met"><span class="mv">13</span><span class="ml">commits · yr</span></div><div class="met"><span class="mv">3</span><span class="ml">repos</span></div><div class="met"><span class="mv">0</span><span class="ml">stars</span></div><div class="met"><span class="mv">0</span><span class="ml">followers</span></div></div>
+      <div class="streak"><div class="skv"><span class="skn">3<small>d</small></span><span class="skl">current streak</span></div><div class="skv"><span class="skn">5<small>d</small></span><span class="skl">longest</span></div><div class="spark"><span class="bar" style="height:9px"></span><span class="bar" style="height:9px"></span><span class="bar" style="height:9px"></span><span class="bar hot" style="height:38px"></span><span class="bar" style="height:2px"></span><span class="bar" style="height:2px"></span><span class="bar" style="height:2px"></span><span class="bar" style="height:2px"></span><span class="bar" style="height:2px"></span><span class="bar" style="height:2px"></span><span class="bar" style="height:2px"></span><span class="bar" style="height:9px"></span><span class="bar" style="height:9px"></span><span class="bar" style="height:24px"></span></div></div>
+    </div>
+    <div class="cR" style="flex:1;padding-left:30px;">
+      <div style="margin-bottom:12px;"><div class="zt sub"><span class="lbl"><span class="mk"></span><span class="txt">VISION</span></span><span></span></div></div>
+      <div class="vterm">
+        <div class="vbar"><span class="wd"></span><span class="wd"></span><span class="wd"></span><span class="vbt">zinzaki@nixos</span></div>
+        <div class="vt"><span class="tw"></span></div>
+      </div>
+    </div>
+  </div>
+</div><div class="zone divln" style="padding-top:22px;padding-bottom:24px;">
+  <div class="zt"><span class="lbl"><span class="mk"></span><span class="txt">PROJECTS · TOP</span></span><span class="d">2 shown</span></div>
+  <div class="cols" style="margin-top:14px;">
+    <div style="flex:1.32;padding-right:34px;"><div class="pj"><div class="pjh"><span class="lamp h3"></span><span class="pjn">yoshiki</span><span class="pjlang">Python</span></div><div class="pjd">様式 — Zinzaki&#x27;s design language. Warm lacquer …</div></div><div class="pj"><div class="pjh"><span class="lamp h3"></span><span class="pjn">X</span></div></div></div>
+    <div class="cR" style="flex:1;padding-left:34px;">
+      <div style="margin-bottom:14px;"><div class="zt sub"><span class="lbl"><span class="mk"></span><span class="txt">FOCUS</span></span><span></span></div></div>
+      <div class="fi"><span class="b"></span>designing systems</div><div class="fi"><span class="b"></span>yoshiki · a design language</div><div class="fi"><span class="b"></span>an OS of my own</div><div class="fi"><span class="b"></span>structure &amp; beauty</div><div class="fhint">// shown in the work, not the words</div>
+    </div>
+  </div>
+</div><div class="zone divln outro" style="padding-top:30px;padding-bottom:34px;">
+  <div class="rule"><span class="l"></span><span class="lily"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <g class="st">
+    <path d="M24,24 Q19.5,12.9 24,4"/>
+    <path d="M24,24 Q13.8,17.6 12.2,7.8"/>
+    <path d="M24,24 Q12,24.8 5,17.8"/>
+    <path d="M24,24 Q14.8,31.7 5,30.2"/>
+    <path d="M24,24 Q21.1,35.6 12.2,40.2"/>
+    <path d="M24,24 Q28.5,35.1 24,44"/>
+    <path d="M24,24 Q34.2,30.4 35.8,40.2"/>
+    <path d="M24,24 Q36,23.2 43,30.2"/>
+    <path d="M24,24 Q33.2,16.3 43,17.8"/>
+    <path d="M24,24 Q26.9,12.4 35.8,7.8"/>
+  </g>
+  <g class="an">
+    <circle cx="24" cy="4" r="1.5"/><circle cx="12.2" cy="7.8" r="1.5"/>
+    <circle cx="5" cy="17.8" r="1.5"/><circle cx="5" cy="30.2" r="1.5"/>
+    <circle cx="12.2" cy="40.2" r="1.5"/><circle cx="24" cy="44" r="1.5"/>
+    <circle cx="35.8" cy="40.2" r="1.5"/><circle cx="43" cy="30.2" r="1.5"/>
+    <circle cx="43" cy="17.8" r="1.5"/><circle cx="35.8" cy="7.8" r="1.5"/>
+  </g>
+  <circle class="core" cx="24" cy="24" r="1.8"/>
+</svg></span><span class="l"></span></div>
+  <div class="fj">構造の中に美しさがある</div>
+  <div class="fr">structure over noise</div>
+</div>
+</div>
+</div>
+</foreignObject>
+</svg>
