@@ -1,0 +1,155 @@
+# Profile configuration. generate.py reads this file and renders profile.svg.
+# This is the only file meant to be edited by hand; the SVG is a generated
+# artifact (and its README ?v= token is refreshed automatically by bump_cache.py).
+
+identity:
+  username:     "Zinzaki"
+  display_nik:  "◇ 𝚉 𝙸 𝙽 𝚉 𝙰 𝙺 𝙸 影 ◇"
+  role:         "architect · systems & software"
+  principle_en: "structure over noise"
+  principle_jp: "構造の中に美しさがある"
+  jp_phrase:    "人は心で生きるんだ"
+  jp_romaji:    "hito wa kokoro de ikiru nda"
+  status:       "online"   # fallback only; the live value is derived daily by stats.yml
+  node:         "01"
+  host:         "nixos"
+
+# Short chips shown under the nickname in the header. Use [] to hide.
+# Keep it short — these are accents, not an exhaustive list.
+focus:
+  - "designing systems"
+  - "yoshiki · a design language"
+  - "an OS of my own"
+  - "structure & beauty"
+
+# Optional "currently working on" line; empty string hides it.
+current: ""
+
+# Quotes rotated in the nickname slot: the nickname is the "home" state and
+# periodically crossfades to a quote and back. Each quote is a list of lines
+# (manual line breaks for alignment). Display time scales with length.
+quotes:
+  - ["What is a world", "of true freedom?"]
+  - ["Limitation is not the opposite of freedom —", "it is what makes freedom possible."]
+  - ["Truth exists regardless of whether", "anyone accepts it or not."]
+  - ["A person who cannot govern themselves", "will always look for a master."]
+  - ["The person you think you are", "is only one possible version of you."]
+  - ["Are you building your life,", "or simply reacting to it?"]
+  - ["The reason you wake up", "each morning."]
+  - ["Every person lives inside", "their own version of reality."]
+
+# Vision panel (mini terminal with a typing animation). A wave is a flat list
+# of [command, output, command, output, ...]: each command types out, its
+# output prints, then the terminal clears for the next wave.
+vision:
+  # Dedicated fastfetch wave: logo on the left, info on the right (auto-aligned).
+  fastfetch:
+    logo:
+      - "  ⣿⣿  "
+      - " ⣿⣿⣿⣿ "
+      - "⣿⣿⣿⣿⣿⣿"
+      - " ⣿⣿⣿⣿ "
+      - "  ⣿⣿  "
+    # Keep to ~6 lines: the terminal box is a fixed height, and fastfetch is
+    # the tallest wave — more rows than this get clipped at the bottom.
+    info:
+      - "力 zinzaki@nixos"
+      - "──────────"
+      - "os     NixOS"
+      - "wm     hyprland"
+      - "shell  fish"
+      - "editor neovim"
+  # Each wave is a flat [command, output, command, output, ...] list: every
+  # command types out, prints its output, then the screen clears. Keep these
+  # honest and a little interesting — they read as "what I actually do".
+  # Kept to a couple of short waves on purpose — each character is an animation
+  # frame, so long/many commands make the banner heavy. Add sparingly.
+  waves:
+    - ["nix build .#exet-os", "→ an OS that does not exist yet"]
+    - ["git log --oneline -2", "design — shape before code\nyoshiki — gold is a seam"]
+
+# Contact links are a clickable badge row at the bottom of README.md (links
+# inside an <img> SVG aren't clickable on GitHub), so they're edited there.
+
+# Tech stack. Each tag has an optional `status` controlling how it looks:
+#   core     → gold fill           (what you're strongest in / lead with)
+#   using    → outlined  (default) (you work with it regularly)
+#   learning → dashed + dim        (exploring / picking up)
+# Omit status → treated as `using`. Legacy `hi: true` still means `core`.
+# Domains (the keys) and their tags can be added/removed/reordered freely;
+# the layout reflows automatically. To hide a domain, delete its block.
+stack:
+  "languages · core":
+    - { name: "Python",      status: core  }
+    - { name: "TypeScript",  status: core  }
+    - { name: "Go",          status: using }
+  "web · fullstack":
+    - { name: "FastAPI",     status: core  }
+    - { name: "React",       status: using }
+    - { name: "Next.js",     status: using }
+    - { name: "Tailwind",    status: using }
+  "bots · automation":
+    - { name: "aiogram",     status: core  }
+    - { name: "Bash",        status: using }
+    - { name: "Node.js",     status: using }
+  "ai · data":
+    - { name: "OpenAI API",  status: core     }
+    - { name: "LangChain",   status: using    }
+    - { name: "PostgreSQL",  status: using    }
+    - { name: "Redis",       status: using    }
+    - { name: "PyTorch",     status: learning }
+  "systems · low-level":
+    - { name: "Rust",         status: core     }
+    - { name: "C",            status: using    }
+    - { name: "Assembly",     status: learning }
+    - { name: "Linux kernel", status: learning }
+  "platform · ops":
+    - { name: "Linux",       status: core  }
+    - { name: "Git",         status: core  }
+    - { name: "Docker",      status: using }
+    - { name: "NixOS",       status: using }
+
+# Projects shown on the profile.
+#   mode: auto   → top repositories by stars, populated by stats.yml
+#   mode: manual → only the pinned list below, in the given order
+projects:
+  mode:   "auto"
+  max:    3
+  pinned: []
+  # Pinned entry example (for mode: manual):
+  # - { name: "exet-os", stars: 0, desc: "reproducible OS built on Nix", lang: "Rust", heat: 3 }
+
+# Populated automatically by stats.yml — do not edit by hand.
+auto_projects: []
+
+# Color palette — KINTSUGI / Kogane (from github.com/zinzaki/yoshiki).
+# Warm lacquer darkness; gold gilds edges, never fills. Token → role:
+#   bg=ink-0  surface=ink-1  surface2=ink-2  gold=kin-1  gold_dim=kin-2
+#   text=bone-1  text_mid=bone-2  text_dim=bone-3  green=moss-0  amber=persimmon
+palette:
+  bg:       "#0B0A08"   # ink-0 — void / background
+  surface:  "#12100C"   # ink-1 — panels
+  surface2: "#1B1813"   # ink-2 — raised cards / tiles
+  gold:     "#c8a96e"   # the older, softer gold (preferred over kin-1 #D6AE66)
+  gold_dim: "#8a6f3e"   # dim gold — labels, glyphs
+  gold4:    "#362C1B"   # line-0 — gold-tinted hairline
+  text:     "#EDE3C4"   # bone-1 — primary text
+  text_mid: "#C9BC96"   # bone-2 — secondary text
+  text_dim: "#94866A"   # bone-3 — muted / meta
+  green:    "#8FAC6F"   # mori-0 — life / active / fresh repo
+  amber:    "#C67F45"   # kaki-1 — persimmon (warning / lamp)
+
+# Live values are written to stats.json by stats.yml. These are the fallback
+# defaults used when stats.json is absent (e.g. local rendering).
+metrics:
+  commits:   0
+  repos:     0
+  stars:     0
+  followers: 0
+
+# Streak panel fallback (real values come from stats.json → streak, computed
+# from the GitHub contribution calendar by stats.yml). spark = last 14 days.
+streak:
+  current: 0
+  longest: 0
+  spark:   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
