@@ -1,15 +1,14 @@
 {
   "metrics": {
-    "commits": 42,
+    "commits": 45,
     "repos": 3,
     "stars": 0,
     "followers": 0
   },
   "streak": {
-    "current": 5,
-    "longest": 5,
+    "current": 6,
+    "longest": 6,
     "spark": [
-      1,
       5,
       0,
       0,
@@ -22,7 +21,8 @@
       1,
       7,
       19,
-      6
+      7,
+      2
     ]
   },
   "activity": {
