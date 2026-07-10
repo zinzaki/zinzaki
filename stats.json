@@ -1,7 +1,7 @@
 {
   "metrics": {
-    "commits": 46,
-    "repos": 3,
+    "commits": 52,
+    "repos": 2,
     "stars": 0,
     "followers": 0
   },
@@ -19,15 +19,15 @@
       0,
       0,
       0,
-      0,
-      0,
+      2,
+      4,
       0,
       0
     ]
   },
   "activity": {
-    "label": "around",
-    "level": "mid"
+    "label": "active",
+    "level": "on"
   },
   "auto_projects": [
     {
@@ -36,13 +36,6 @@
       "desc": "様式 — Zinzaki's design language. Warm lacquer · bone · gold, stru",
       "lang": "Python",
       "heat": 3
-    },
-    {
-      "name": "X",
-      "stars": 0,
-      "desc": "",
-      "lang": "",
-      "heat": 2
     }
   ]
 }
