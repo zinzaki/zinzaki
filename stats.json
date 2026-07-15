@@ -14,7 +14,6 @@
       0,
       0,
       0,
-      0,
       2,
       4,
       0,
@@ -22,12 +21,13 @@
       3,
       0,
       0,
+      0,
       0
     ]
   },
   "activity": {
-    "label": "active",
-    "level": "on"
+    "label": "around",
+    "level": "mid"
   },
   "auto_projects": [
     {
