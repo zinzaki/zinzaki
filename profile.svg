@@ -175,7 +175,7 @@
 <div class="kage">影</div><div class="frame"></div><div class="cnr tl"></div><div class="cnr tr"></div><div class="cnr bl"></div><div class="cnr br"></div>
 <div class="zone" style="height:318px;">
   <div class="meta tl">UNIT — ZINZAKI</div>
-  <div class="meta tr">NODE 01 · <span class="dot mid"></span>AROUND</div>
+  <div class="meta tr">NODE 01 · <span class="dot on"></span>ACTIVE</div>
   <div class="crystal" style="top:84px;right:44px;">
   <svg class="sig" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
     <circle class="r s1" cx="50" cy="50" r="46" stroke-width="1" stroke-dasharray="3 7"/>
