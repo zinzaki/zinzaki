@@ -26,8 +26,8 @@
     ]
   },
   "activity": {
-    "label": "around",
-    "level": "mid"
+    "label": "away",
+    "level": "off"
   },
   "auto_projects": [
     {
