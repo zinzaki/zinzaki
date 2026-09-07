@@ -109,6 +109,12 @@ stack:
     - { name: "Docker",      status: using }
     - { name: "NixOS",       status: using }
 
+# Measured language mix, aggregated by bytes across your public repos and
+# written to stats.json by stats.yml — evidence sitting next to the declared
+# stack above. Rendered only once at least two languages show up (a lone
+# "100% Python" bar says nothing). Set to false to hide it entirely.
+measured: true
+
 # Projects shown on the profile.
 #   mode: auto   → top repositories by stars, populated by stats.yml
 #   mode: manual → only the pinned list below, in the given order

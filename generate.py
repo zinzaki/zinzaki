@@ -12,13 +12,20 @@ Contact links live as a clickable badge row in README.md (links inside an SVG
 aren't clickable), so they are not rendered here.
 
 Missing or renamed config keys fall back to defaults instead of failing the
-build, so config.yml can be edited safely.
+build, so config.yml can be edited safely — validate.py reports the problem
+rather than the profile silently rendering it wrong. Run with --strict (CI) to
+turn those reports into a failed build, or --check to assert the committed
+profile.svg still matches this generator.
 """
 
+import argparse
 import html
 import json
+import sys
 import yaml
 from pathlib import Path
+
+import validate
 
 CONFIG = Path("config.yml")
 STATS = Path("stats.json")
@@ -38,10 +45,19 @@ DEFAULT_IDENTITY = {
 }
 
 
-def load():
-    """Read config.yml, fill in defaults, and overlay live data from stats.json."""
+def load(strict=False):
+    """Read config.yml, fill in defaults, and overlay live data from stats.json.
+
+    Config problems are reported, not fatal: a typo prints a warning and the
+    profile still builds. `strict=True` (used by CI) turns them into an error
+    so a silently-wrong profile never reaches main."""
     with open(CONFIG, encoding="utf-8") as f:
         cfg = yaml.safe_load(f) or {}
+    warnings = validate.check(cfg)
+    for w in warnings:
+        print(f"! {w}", file=sys.stderr)
+    if warnings and strict:
+        raise validate.ConfigError(f"{len(warnings)} config issue(s) — see above")
     cfg["palette"] = {**DEFAULT_PALETTE, **(cfg.get("palette") or {})}
     cfg["identity"] = {**DEFAULT_IDENTITY, **(cfg.get("identity") or {})}
     cfg.setdefault("stack", {})
@@ -54,6 +70,8 @@ def load():
                 cfg.setdefault("streak", {}).update(data["streak"])
             if "auto_projects" in data:
                 cfg["auto_projects"] = data["auto_projects"]
+            if "languages" in data:
+                cfg["languages"] = data["languages"]
             if data.get("activity"):   # real status derived daily from GH activity
                 cfg["identity"]["status"] = data["activity"].get("label", cfg["identity"]["status"])
                 cfg["identity"]["status_level"] = data["activity"].get("level", "on")
@@ -169,6 +187,19 @@ CSS = """
 .tag.learning{color:%TEXT_DIM%;background:transparent;border-style:dashed;
   border-color:rgba(138,111,62,.45);}
 
+/* measured language mix — evidence next to the declared stack. Segments use
+   the gold ramp rather than GitHub's language colours, which would fight the
+   palette; the legend carries the names, so hue only has to separate. */
+.lang{margin-top:22px;padding-top:16px;border-top:1px solid rgba(200,169,110,.07);}
+.langhd{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:%TEXT_DIM%;margin-bottom:11px;}
+.langbar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:rgba(200,169,110,.05);}
+.langbar span{height:6px;}
+.langlg{display:flex;flex-wrap:wrap;gap:7px 22px;margin-top:12px;font-size:11.5px;
+  color:%TEXT_DIM%;letter-spacing:.04em;}
+.langlg .sw{display:inline-block;width:6px;height:6px;transform:rotate(45deg);
+  margin-right:8px;vertical-align:middle;}
+.langlg b{color:%TEXT_MID%;font-weight:normal;}
+
 /* streak — rounded card */
 .streak{display:flex;align-items:center;gap:28px;margin-top:16px;padding:14px 18px;
   background:%SURFACE2%;border:1px solid rgba(200,169,110,.14);border-radius:9px;}
@@ -259,10 +290,21 @@ def inject(css, pal):
     return css
 
 
-def wrap(w, h, css, body):
+def wrap(w, h, css, body, title="", desc=""):
+    """Wrap the rendered HTML in an SVG shell.
+
+    <title>/<desc> are what a screen reader actually announces — without them
+    the banner is a silent image, and README alt text alone doesn't reach it."""
+    a11y = ""
+    if title:
+        a11y = f'<title id="pt">{esc(title)}</title>'
+        if desc:
+            a11y += f'<desc id="pd">{esc(desc)}</desc>'
+    labels = ' aria-labelledby="pt pd"' if desc else (' aria-labelledby="pt"' if title else "")
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
-        f'viewBox="0 0 {w} {h}" role="img">\n'
+        f'viewBox="0 0 {w} {h}" role="img"{labels}>\n'
+        f'{a11y}\n'
         f'<foreignObject width="{w}" height="{h}">\n'
         f'<div xmlns="http://www.w3.org/1999/xhtml">\n'
         f'<style>{css}</style>\n'
@@ -454,15 +496,80 @@ def tag_cls(it):
     return {"core": "tag core", "learning": "tag learning"}.get(status, "tag")
 
 
+# Layout constants mirrored from the CSS above. The panel is one fixed-height
+# SVG, so the height has to be predicted here rather than measured by a browser.
+CAT_W = (W - 2 * PADX - 36) / 2   # .cat column width (two per row, 36px gutter)
+# 0.6em at 12.5px is 7.5; over-estimate slightly so a wrap the browser makes
+# is never a wrap we missed — erring tall costs a gap, erring short clips.
+CH_W = 7.8
+TAG_PAD = 24                      # .tag padding (11+11) + border (1+1)
+TAG_H, TAG_GAP = 29, 7            # .tag line box; .tags gap
+CL_H, ROW_GAP = 21, 19            # .cl label + margin; .stackgrid row gap
+
+
+def cat_height(items):
+    """Height of one stack domain, wrapping its pills the way flex-wrap will.
+
+    Estimated rather than hardcoded so adding tags reflows the panel instead of
+    clipping it against the bottom frame."""
+    lines, used = 1, 0.0
+    for it in items:
+        w = len(str(it.get("name", ""))) * CH_W + TAG_PAD
+        if used and used + TAG_GAP + w > CAT_W:
+            lines, used = lines + 1, w
+        else:
+            used += (TAG_GAP if used else 0) + w
+    return CL_H + lines * TAG_H + (lines - 1) * TAG_GAP
+
+
 def stack_inner(cfg):
-    cats = []
+    cats, heights = [], []
     for cat_name, items in cfg["stack"].items():
         tags = "".join(
             f'<span class="{tag_cls(it)}">{esc(it["name"])}</span>' for it in items)
         cats.append(f'<div class="cat"><div class="cl">{esc(cat_name)}</div>'
                     f'<div class="tags">{tags}</div></div>')
-    rows = -(-len(cfg["stack"]) // 2) or 1          # two domains per row
-    return f'<div class="stackgrid">{"".join(cats)}</div>', rows * 88
+        heights.append(cat_height(items))
+    # two domains per row; a row is as tall as its taller domain
+    pairs = [heights[i:i + 2] for i in range(0, len(heights), 2)]
+    h = sum(max(row) for row in pairs) + ROW_GAP * max(0, len(pairs) - 1)
+    return f'<div class="stackgrid">{"".join(cats)}</div>', h or 88
+
+
+# Gold ramp for the language bar: strongest language gets the full gold, the
+# tail fades toward the background. Beyond this many, the rest fold into "other".
+LANG_RAMP = ["#c8a96e", "#a98a55", "#8a6f3e", "#6b5730", "#4d3e23"]
+LANG_MAX = len(LANG_RAMP) - 1
+
+
+def languages_inner(cfg):
+    """Measured language mix from the owner's public repos (stats.json).
+
+    Hidden below two languages: a lone "100% Python" bar states nothing the
+    stack list doesn't already say."""
+    if cfg.get("measured") is False:
+        return "", 0
+    langs = [l for l in (cfg.get("languages") or []) if float(l.get("pct", 0)) > 0]
+    if len(langs) < 2:
+        return "", 0
+
+    # Fold the tail into "other" only when it hides more than one language —
+    # a single language relabelled "other" loses a name for nothing.
+    if len(langs) > len(LANG_RAMP):
+        head, tail = langs[:LANG_MAX], langs[LANG_MAX:]
+        head = head + [{"name": "other", "pct": round(sum(float(l["pct"]) for l in tail), 1)}]
+    else:
+        head = langs
+
+    bar = "".join(f'<span style="width:{float(l["pct"]):.1f}%;background:{LANG_RAMP[i]}"></span>'
+                  for i, l in enumerate(head))
+    legend = "".join(
+        f'<span><span class="sw" style="background:{LANG_RAMP[i]}"></span>'
+        f'<b>{esc(l["name"])}</b> {float(l["pct"]):.1f}%</span>'
+        for i, l in enumerate(head))
+    return (f'<div class="lang"><div class="langhd">measured · public repos</div>'
+            f'<div class="langbar">{bar}</div>'
+            f'<div class="langlg">{legend}</div></div>'), 84
 
 
 def streak_inner(cfg):
@@ -517,6 +624,25 @@ def projects_inner(cfg):
     return inner, 96, 0
 
 
+def a11y_label(cfg):
+    """(title, description) announced in place of the banner image."""
+    idn = cfg["identity"]
+    title = " — ".join(x for x in (idn["username"], idn.get("role", "")) if x)
+    m = cfg.get("metrics", {}) or {}
+    bits = []
+    if cfg.get("stack"):
+        bits.append("stack: " + ", ".join(
+            it["name"] for items in cfg["stack"].values() for it in items
+            if tag_cls(it) == "tag core"))
+    if cfg.get("focus"):
+        bits.append("focus: " + ", ".join(str(x) for x in cfg["focus"]))
+    bits.append(f"{fmt(m.get('commits', 0))} commits in the last year, "
+                f"{fmt(m.get('repos', 0))} repositories, {fmt(m.get('stars', 0))} stars")
+    if idn.get("principle_en"):
+        bits.append(str(idn["principle_en"]))
+    return title, ". ".join(bits) + "."
+
+
 def build_profile(cfg, pal):
     head, hh = header_html(cfg)
     SUB = 44
@@ -526,11 +652,13 @@ def build_profile(cfg, pal):
 
     # ── STACK: full-width grid of domains (two per row, reflows automatically) ──
     st_in, st_h = stack_inner(cfg)
+    lang_in, lang_h = languages_inner(cfg)
     n = len(cfg["stack"])
-    rstack_h = 70 + st_h + 22
+    rstack_h = 70 + st_h + lang_h + 22
     rstack = f"""<div class="zone divln" style="padding-top:22px;padding-bottom:24px;">
   {ztitle('STACK · INSTRUMENTS', f'{n} domains')}
   <div style="margin-top:18px;">{st_in}</div>
+  {lang_in}
 </div>"""
 
     # ── DATA: live metrics + streak (left) · vision terminal (right) ──
@@ -592,16 +720,41 @@ def build_profile(cfg, pal):
             '<div class="cnr tl"></div><div class="cnr tr"></div>'
             '<div class="cnr bl"></div><div class="cnr br"></div>\n'
             + head + rstack + rdata + row3 + outro)
-    return wrap(W, total, css, body)
+    return wrap(W, total, css, body, *a11y_label(cfg))
+
+
+OUT = Path("profile.svg")
 
 
 def main():
-    cfg = load()
-    pal = cfg["palette"]
-    svg = build_profile(cfg, pal)
-    Path("profile.svg").write_text(svg, encoding="utf-8")
-    print(f"✓ profile.svg ({len(svg):,} bytes)")
+    ap = argparse.ArgumentParser(description="Render profile.svg from config.yml.")
+    ap.add_argument("--strict", action="store_true",
+                    help="treat config.yml warnings as errors (used by CI)")
+    ap.add_argument("--check", action="store_true",
+                    help="don't write; fail if the committed profile.svg is stale")
+    args = ap.parse_args()
+
+    try:
+        cfg = load(strict=args.strict)
+    except validate.ConfigError as e:
+        print(f"✗ {e}", file=sys.stderr)
+        return 1
+
+    svg = build_profile(cfg, cfg["palette"])
+    size = len(svg.encode("utf-8"))
+
+    if args.check:
+        current = OUT.read_text(encoding="utf-8") if OUT.exists() else None
+        if current != svg:
+            print("✗ profile.svg is out of date — run: python3 generate.py", file=sys.stderr)
+            return 1
+        print(f"✓ profile.svg is up to date ({size:,} bytes)")
+        return 0
+
+    OUT.write_text(svg, encoding="utf-8")
+    print(f"✓ profile.svg ({size:,} bytes)")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
