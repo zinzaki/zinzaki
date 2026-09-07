@@ -15,7 +15,7 @@ Usage: python3 validate.py   (exits non-zero if anything is off)
 
 import re
 
-STATUSES = {"core", "using", "learning"}
+STATUSES = {"core", "using", "learning", "planned"}
 HEX = re.compile(r"^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$")
 
 TOP_KEYS = {

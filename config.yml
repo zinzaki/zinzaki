@@ -71,28 +71,45 @@ vision:
 # Contact links are a clickable badge row at the bottom of README.md (links
 # inside an <img> SVG aren't clickable on GitHub), so they're edited there.
 
-# Tech stack — only what there is evidence for. Each tag has an optional
-# `status` controlling how it looks:
-#   core     → gold fill           (what you lead with today)
-#   using    → outlined  (default) (you actually work with it)
-#   learning → dashed + dim        (picking it up right now)
+# Tech stack. Each tag has a `status` controlling how it looks:
+#   core     → gold fill     (what you lead with today)
+#   using    → outlined      (you actually work with it)
+#   learning → dashed + dim  (picking it up right now)
+#   planned  → dotted, faint (on the list, not started)
 # Omit status → treated as `using`. Legacy `hi: true` still means `core`.
 #
-# The rule this list is kept to: nothing goes here until there is a repo, a
-# commit or a machine behind it. Things you intend to learn belong in ROADMAP.md,
-# not on the card — a profile that promises Rust before the first line of Rust
-# is the one thing a profile can't recover from. When the code lands, the
-# measured bar below picks the language up on its own; that's the cue to add it.
+# The point of the last two statuses: the list can be full without being a
+# claim. `learning` and `planned` say "not yet" out loud, so nothing here is
+# something you'd have to defend — and a tag graduates upward on its own
+# schedule. Keep `core` and `using` for what has a repo, a commit or a machine
+# behind it. The order of learning is in ROADMAP.md.
+#
+# Domains (the keys) and their tags can be added/removed/reordered freely;
+# the layout reflows automatically — two domains per row, and a lone domain
+# drops its sub-heading since the zone title already names it.
 stack:
-  # Key is hidden while this is the only domain; it reappears as a sub-heading
-  # the moment a second one is added, so keep it short and neutral.
-  "daily":
-    - { name: "Python",   status: core  }
-    - { name: "Git",      status: using }
-    - { name: "Linux",    status: using }
-    - { name: "NixOS",    status: using }
-    - { name: "Neovim",   status: using }
-    - { name: "fish",     status: using }
+  "languages":
+    - { name: "Rust",        status: learning }
+    - { name: "Python",      status: core     }
+    - { name: "TypeScript",  status: learning }
+  "environment · daily":
+    - { name: "Linux",       status: using }
+    - { name: "NixOS",       status: using }
+    - { name: "Neovim",      status: using }
+    - { name: "fish",        status: using }
+    - { name: "Git",         status: using }
+  "bots · automation":
+    - { name: "aiogram",     status: planned }
+    - { name: "grammY",      status: planned }
+  "data · storage":
+    - { name: "PostgreSQL",  status: planned }
+    - { name: "Redis",       status: planned }
+
+# Measured language mix, aggregated by bytes across your public repos and
+# written to stats.json by stats.yml — evidence sitting next to the declared
+# stack above. Rendered only once at least two languages show up (a lone
+# "100% Python" bar says nothing). Set to false to hide it entirely.
+measured: true
 
 # Projects shown on the profile.
 #   mode: auto   → top repositories by stars, populated by stats.yml

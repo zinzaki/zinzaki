@@ -73,10 +73,23 @@ def test_svg_is_announced_to_screen_readers():
 def test_tag_status_maps_to_class():
     assert generate.tag_cls({"name": "x", "status": "core"}) == "tag core"
     assert generate.tag_cls({"name": "x", "status": "learning"}) == "tag learning"
+    assert generate.tag_cls({"name": "x", "status": "planned"}) == "tag planned"
     assert generate.tag_cls({"name": "x", "status": "using"}) == "tag"
     assert generate.tag_cls({"name": "x"}) == "tag", "no status should mean `using`"
     assert generate.tag_cls({"name": "x", "hi": True}) == "tag core", "legacy `hi` lost"
     assert generate.tag_cls({"name": "x", "status": "nonsense"}) == "tag"
+
+
+@case
+def test_every_status_has_a_distinct_look():
+    # Four tiers only help if they are visually different — a status whose CSS
+    # class is missing renders as plain `using` and quietly overstates it.
+    css = generate.CSS
+    for cls in ("tag core", "tag learning", "tag planned"):
+        assert f".{cls.replace(' ', '.')}{{" in css.replace("\n", ""), f"no CSS rule for {cls}"
+    svg = render()
+    for cls in ("tag core", "tag learning", "tag planned"):
+        assert f'class="{cls}"' in svg, f"{cls} not used by the real config"
 
 
 @case
