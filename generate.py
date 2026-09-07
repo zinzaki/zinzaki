@@ -522,14 +522,26 @@ def cat_height(items):
     return CL_H + lines * TAG_H + (lines - 1) * TAG_GAP
 
 
+def stack_meta(stack):
+    """The zone's right-hand caption. A flat list is counted in instruments;
+    only a grouped stack is counted in domains — and never "1 domains"."""
+    if len(stack) == 1:
+        n = sum(len(v) for v in stack.values())
+        return f"{n} instrument{'' if n == 1 else 's'}"
+    return f"{len(stack)} domain{'' if len(stack) == 1 else 's'}"
+
+
 def stack_inner(cfg):
     cats, heights = [], []
+    # A lone domain needs no sub-heading — the zone title above it already says
+    # what the row is, and two stacked labels read as a missing level.
+    labelled = len(cfg["stack"]) > 1
     for cat_name, items in cfg["stack"].items():
         tags = "".join(
             f'<span class="{tag_cls(it)}">{esc(it["name"])}</span>' for it in items)
-        cats.append(f'<div class="cat"><div class="cl">{esc(cat_name)}</div>'
-                    f'<div class="tags">{tags}</div></div>')
-        heights.append(cat_height(items))
+        label = f'<div class="cl">{esc(cat_name)}</div>' if labelled else ""
+        cats.append(f'<div class="cat">{label}<div class="tags">{tags}</div></div>')
+        heights.append(cat_height(items) - (0 if labelled else CL_H))
     # two domains per row; a row is as tall as its taller domain
     pairs = [heights[i:i + 2] for i in range(0, len(heights), 2)]
     h = sum(max(row) for row in pairs) + ROW_GAP * max(0, len(pairs) - 1)
@@ -653,10 +665,9 @@ def build_profile(cfg, pal):
     # ── STACK: full-width grid of domains (two per row, reflows automatically) ──
     st_in, st_h = stack_inner(cfg)
     lang_in, lang_h = languages_inner(cfg)
-    n = len(cfg["stack"])
     rstack_h = 70 + st_h + lang_h + 22
     rstack = f"""<div class="zone divln" style="padding-top:22px;padding-bottom:24px;">
-  {ztitle('STACK · INSTRUMENTS', f'{n} domains')}
+  {ztitle('STACK · INSTRUMENTS', stack_meta(cfg["stack"]))}
   <div style="margin-top:18px;">{st_in}</div>
   {lang_in}
 </div>"""

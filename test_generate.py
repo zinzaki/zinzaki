@@ -84,11 +84,14 @@ def test_stack_height_follows_content():
     one = generate.cat_height([{"name": "Go"}])
     many = generate.cat_height([{"name": "n" * 20} for _ in range(6)])
     assert many > one * 2, f"a wrapping domain must reserve more rows ({one} -> {many})"
+    # Synthetic stacks, not the live config — this asserts the reflow, and must
+    # not start failing the day the real stack is trimmed.
     cfg = copy.deepcopy(CFG)
     cfg["stack"] = {"one": [{"name": "Go"}]}
     _, small = generate.stack_inner(cfg)
-    _, real = generate.stack_inner(CFG)
-    assert real > small, "six domains must be taller than one"
+    cfg["stack"] = {f"d{i}": [{"name": "Go"}] for i in range(6)}
+    _, tall = generate.stack_inner(cfg)
+    assert tall > small, f"six domains must be taller than one ({small} -> {tall})"
 
 
 @case
