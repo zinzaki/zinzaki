@@ -1,0 +1,16 @@
+# The workflows pin actions by major tag; this opens a PR when one moves, so a
+# deprecated runner action surfaces as a review instead of a red build one day.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "ci"
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "deps"

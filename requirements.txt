@@ -1,0 +1,2 @@
+# Pinned so a CI run a year from now renders the same SVG as today.
+PyYAML==6.0.2

@@ -1,0 +1,51 @@
+name: Check
+
+# Validates the profile on branches and pull requests, without committing
+# anything. main is covered by "Build profile", which regenerates and pushes;
+# this is the gate that runs *before* a change gets there — so a typo in
+# config.yml or a broken generator never becomes the profile people see.
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install deps
+        run: pip install -q -r requirements.txt
+
+      # Unknown keys, bad `status:` values, a quote written as a bare string —
+      # all of which generate.py would otherwise absorb into a wrong-but-valid
+      # profile.
+      - name: Validate config.yml
+        run: python3 validate.py
+
+      - name: Render + smoke test
+        run: |
+          python3 generate.py --strict
+          python3 test_generate.py
+
+      # profile.svg is a committed artifact. Drift means someone hand-edited the
+      # SVG, or edited config.yml without rebuilding — either way, say so here
+      # instead of letting the next unrelated build quietly overwrite it.
+      - name: Committed SVG matches the generator
+        run: python3 generate.py --check

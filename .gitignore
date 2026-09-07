@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+
+# generated preview / scratch
+profile.check.svg
