@@ -186,6 +186,10 @@ CSS = """
 .tag.core{color:%GOLD%;border-color:rgba(200,169,110,.55);background:rgba(200,169,110,.1);font-weight:bold;}
 .tag.learning{color:%TEXT_DIM%;background:transparent;border-style:dashed;
   border-color:rgba(138,111,62,.45);}
+/* planned → dotted, dimmest: on the list, not started. Distinct from
+   `learning` so "picking it up now" and "someday" don't read the same. */
+.tag.planned{color:rgba(148,134,106,.6);background:transparent;border-style:dotted;
+  border-color:rgba(138,111,62,.28);}
 
 /* measured language mix — evidence next to the declared stack. Segments use
    the gold ramp rather than GitHub's language colours, which would fight the
@@ -491,9 +495,12 @@ def header_html(cfg):
 
 
 def tag_cls(it):
-    """Map a tag's status to its CSS class. Legacy `hi: true` → core."""
+    """Map a tag's status to its CSS class. Legacy `hi: true` → core.
+
+    core → gold fill · using → outlined · learning → dashed · planned → dotted."""
     status = (it.get("status") or ("core" if it.get("hi") else "using")).lower()
-    return {"core": "tag core", "learning": "tag learning"}.get(status, "tag")
+    return {"core": "tag core", "learning": "tag learning",
+            "planned": "tag planned"}.get(status, "tag")
 
 
 # Layout constants mirrored from the CSS above. The panel is one fixed-height
