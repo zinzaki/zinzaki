@@ -134,7 +134,7 @@ jobs:
             require('fs').writeFileSync('stats.json', JSON.stringify(out, null, 2) + '\n');
             console.log(out);
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
