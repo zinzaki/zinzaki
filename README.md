@@ -2,7 +2,7 @@
      The ?v= token on the image is refreshed automatically by bump_cache.py (content hash) to bust GitHub's
      camo cache. Contacts live only here, as a clickable badge row (links inside an SVG aren't clickable). -->
 
-<img src="https://raw.githubusercontent.com/zinzaki/zinzaki/main/profile.svg?v=b5b77666" width="100%" alt="Zinzaki — architect · systems and software. Stack, live GitHub metrics and current focus."/>
+<img src="https://raw.githubusercontent.com/zinzaki/zinzaki/main/profile.svg?v=2be1826a" width="100%" alt="Zinzaki — architect · systems and software. Stack, live GitHub metrics and current focus."/>
 
 <div align="center">
 <a href="https://t.me/Zinzaki"><img alt="telegram" src="https://img.shields.io/badge/telegram-1B1813?style=flat&logo=telegram&logoColor=D6AE66&labelColor=1B1813"/></a>
