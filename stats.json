@@ -9,7 +9,6 @@
     "current": 0,
     "longest": 8,
     "spark": [
-      0,
       22,
       1,
       0,
@@ -22,12 +21,13 @@
       0,
       0,
       0,
+      0,
       0
     ]
   },
   "activity": {
-    "label": "away",
-    "level": "off"
+    "label": "active",
+    "level": "on"
   },
   "languages": [
     {
