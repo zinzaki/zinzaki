@@ -1,27 +1,27 @@
 {
   "metrics": {
-    "commits": 142,
-    "repos": 2,
+    "commits": 182,
+    "repos": 3,
     "stars": 0,
     "followers": 0
   },
   "streak": {
-    "current": 0,
+    "current": 2,
     "longest": 8,
     "spark": [
-      22,
       1,
       0,
       0,
       0,
       0,
       0,
-      5,
+      11,
+      16,
       0,
       0,
       0,
-      0,
-      0,
+      1,
+      18,
       0
     ]
   },
@@ -31,56 +31,68 @@
   },
   "languages": [
     {
+      "name": "HTML",
+      "bytes": 367269,
+      "pct": 40.1
+    },
+    {
       "name": "Python",
-      "bytes": 130773,
-      "pct": 64.8
+      "bytes": 239382,
+      "pct": 26.1
     },
     {
       "name": "CSS",
-      "bytes": 37139,
-      "pct": 18.4
+      "bytes": 144358,
+      "pct": 15.7
     },
     {
       "name": "JavaScript",
-      "bytes": 22839,
-      "pct": 11.3
+      "bytes": 70741,
+      "pct": 7.7
     },
     {
-      "name": "Shell",
-      "bytes": 3490,
-      "pct": 1.7
+      "name": "Slint",
+      "bytes": 54919,
+      "pct": 6
     },
     {
       "name": "Lua",
-      "bytes": 3188,
-      "pct": 1.6
+      "bytes": 20286,
+      "pct": 2.2
+    },
+    {
+      "name": "Shell",
+      "bytes": 16758,
+      "pct": 1.8
     },
     {
       "name": "Rust",
       "bytes": 1576,
-      "pct": 0.8
-    },
-    {
-      "name": "HTML",
-      "bytes": 1087,
-      "pct": 0.5
+      "pct": 0.2
     },
     {
       "name": "TypeScript",
       "bytes": 992,
-      "pct": 0.5
+      "pct": 0.1
     },
     {
       "name": "Go",
       "bytes": 742,
-      "pct": 0.4
+      "pct": 0.1
     }
   ],
   "auto_projects": [
     {
       "name": "yoshiki",
       "stars": 0,
-      "desc": "様式 — Zinzaki's design language. Warm lacquer · bone · gold,",
+      "desc": "A library of design registers: sixteen proven palettes, a role",
+      "lang": "HTML",
+      "heat": 3
+    },
+    {
+      "name": "yoshiki-themes",
+      "stars": 0,
+      "desc": "Program themes generated from the yoshiki palettes: terminals,",
       "lang": "Python",
       "heat": 3
     }
