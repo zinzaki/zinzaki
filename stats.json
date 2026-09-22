@@ -6,10 +6,9 @@
     "followers": 0
   },
   "streak": {
-    "current": 2,
+    "current": 0,
     "longest": 8,
     "spark": [
-      1,
       0,
       0,
       0,
@@ -22,6 +21,7 @@
       0,
       1,
       18,
+      0,
       0
     ]
   },
