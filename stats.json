@@ -1,15 +1,14 @@
 {
   "metrics": {
-    "commits": 186,
+    "commits": 193,
     "repos": 3,
     "stars": 0,
     "followers": 0
   },
   "streak": {
-    "current": 0,
+    "current": 1,
     "longest": 8,
     "spark": [
-      1,
       18,
       0,
       0,
@@ -22,6 +21,7 @@
       0,
       1,
       0,
+      7,
       0
     ]
   },
@@ -32,38 +32,38 @@
   "languages": [
     {
       "name": "HTML",
-      "bytes": 1124432,
-      "pct": 64.8
+      "bytes": 1169752,
+      "pct": 65.4
     },
     {
       "name": "Python",
-      "bytes": 296170,
-      "pct": 17.1
+      "bytes": 304387,
+      "pct": 17
     },
     {
       "name": "CSS",
       "bytes": 144358,
-      "pct": 8.3
+      "pct": 8.1
     },
     {
       "name": "JavaScript",
       "bytes": 74666,
-      "pct": 4.3
+      "pct": 4.2
     },
     {
       "name": "Slint",
       "bytes": 54919,
-      "pct": 3.2
+      "pct": 3.1
     },
     {
       "name": "Lua",
       "bytes": 20286,
-      "pct": 1.2
+      "pct": 1.1
     },
     {
       "name": "Shell",
       "bytes": 16959,
-      "pct": 1
+      "pct": 0.9
     },
     {
       "name": "Rust",
@@ -83,17 +83,17 @@
   ],
   "auto_projects": [
     {
-      "name": "yoshiki",
+      "name": "yoshiki-themes",
       "stars": 0,
-      "desc": "A library of design registers: sixteen proven palettes, a role",
+      "desc": "Program themes generated from the yoshiki palettes: terminals,",
       "lang": "HTML",
       "heat": 3
     },
     {
-      "name": "yoshiki-themes",
+      "name": "yoshiki",
       "stars": 0,
-      "desc": "Program themes generated from the yoshiki palettes: terminals,",
-      "lang": "Python",
+      "desc": "A library of design registers: sixteen proven palettes, a role",
+      "lang": "HTML",
       "heat": 3
     }
   ]
