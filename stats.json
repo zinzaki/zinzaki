@@ -1,12 +1,12 @@
 {
   "metrics": {
-    "commits": 199,
-    "repos": 2,
+    "commits": 210,
+    "repos": 3,
     "stars": 0,
     "followers": 0
   },
   "streak": {
-    "current": 0,
+    "current": 2,
     "longest": 8,
     "spark": [
       0,
@@ -21,20 +21,33 @@
       0,
       0,
       0,
-      0,
-      0
+      5,
+      7
     ]
   },
   "activity": {
-    "label": "around",
-    "level": "mid"
+    "label": "active",
+    "level": "on"
   },
   "languages": [
     {
+      "name": "HTML",
+      "bytes": 1954013,
+      "pct": 96.5
+    },
+    {
       "name": "Python",
-      "bytes": 53111,
-      "pct": 100
+      "bytes": 71112,
+      "pct": 3.5
     }
   ],
-  "auto_projects": []
+  "auto_projects": [
+    {
+      "name": "kiory",
+      "stars": 0,
+      "desc": "Kiory — мягкие интерфейсные иконки на сетке",
+      "lang": "HTML",
+      "heat": 3
+    }
+  ]
 }
